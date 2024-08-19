@@ -1,11 +1,13 @@
-﻿namespace TelemetryPortal.Repository
+﻿using System.Collections.Generic;
+
+namespace TelemetryPortal.Repository
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAll();
-        Task<T> Get(Guid id);
-        Task Create(T entity);
-        Task Delete(Guid id);
-        Task Update(T entity);
+        IEnumerable<T> GetAll();
+        T Get(Guid id);
+        void Create(T entity);
+        void Delete(T entity);
+        void Update(T entity);
     }
 }

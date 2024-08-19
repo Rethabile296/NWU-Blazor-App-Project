@@ -2,6 +2,7 @@
 using TelemetryPortal.Data;
 using TelemetryPortal.Models;
 
+
 namespace TelemetryPortal.Repository
 {
     public class ClientRepository : IClientRepository

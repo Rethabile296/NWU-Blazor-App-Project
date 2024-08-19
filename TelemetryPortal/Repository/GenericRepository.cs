@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TelemetryPortal.Data;
+using System.Collections.Generic;
 
 namespace TelemetryPortal.Repository
 {
@@ -14,36 +15,71 @@ namespace TelemetryPortal.Repository
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return await _dbSet.ToListAsync();
-        }
-
-        public async Task<T> Get(Guid id)
-        {
-            return await _dbSet.FindAsync(id);
-        }
-
-        public async Task Create(T entity)
-        {
-            await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task Update(T entity)
-        {
-            _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task Delete(Guid id)
-        {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity != null)
+            try
             {
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
+                return _dbSet.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
         }
+
+        public T Get(Guid id)
+        {
+            return _dbSet.Find(id);
+        }
+
+        public void Create(T entity)
+        {
+            if(entity == null)
+            {
+                throw new ArgumentNullException($"{nameof(Create)} entity must not be null");
+            }
+            try
+            {
+                _context.Add(entity);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entity)} could not be created: {ex.Message}");
+            }
+        }
+
+        public void Update(T entity)
+        {
+            if(entity == null)
+            {
+                throw new ArgumentNullException($"{nameof(Create)} entity must not be null");
+            }
+            try
+            {
+                _context.Update(entity);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entity)}could not be updated: {ex.Message}");
+            }
+        }
+
+        public void Delete(T entity)
+        {
+            try
+            {
+                _context.Remove(entity);
+                _context.SaveChanges(); //Change
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't delete entity: {ex.Message}");
+            }
+        }
+
+    
+   
     }
 }
