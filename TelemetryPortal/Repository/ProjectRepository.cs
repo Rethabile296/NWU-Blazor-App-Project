@@ -26,11 +26,12 @@ namespace TelemetryPortal.Repository
         // Get a single project by ID
         public async Task<Project> Get(Guid projectId)
         {
-            return await _context.Projects.FindAsync(projectId);
+            return await _context.Projects.FindAsync(projectId) ?? new Project();
+
         }
 
-        // Create a new project
-        public async Task Create(Project project)
+            // Create a new project
+            public async Task Create(Project project)
         {
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();

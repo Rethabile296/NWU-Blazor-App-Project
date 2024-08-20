@@ -29,7 +29,12 @@ namespace TelemetryPortal.Repository
 
         public T Get(Guid id)
         {
-            return _dbSet.Find(id);
+            var entity = _dbSet.Find(id);
+            if (entity == null)
+            {
+                throw new InvalidOperationException("Entity not found.");
+            }
+            return entity;
         }
 
         public void Create(T entity)
