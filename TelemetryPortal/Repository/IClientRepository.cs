@@ -2,7 +2,7 @@
 
 namespace TelemetryPortal.Repository
 {
-    public interface IClientRepository
+    public interface IClientRepository : IGenericRepository<Client>
     {
         Task<IEnumerable<Client>> GetAll();
         Task<Client> Get(Guid clientId);

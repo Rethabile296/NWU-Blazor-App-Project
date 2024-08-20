@@ -2,7 +2,7 @@
 
 namespace TelemetryPortal.Repository
 {
-    public interface IProjectRepository
+    public interface IProjectRepository : IGenericRepository<Project>
     {
         Task<IEnumerable<Project>> GetAll();
         Task<Project> Get(Guid projectId);

@@ -7,12 +7,12 @@ using TelemetryPortal.Models;
 
 namespace TelemetryPortal.Repository
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : GenericRepository<Project>, IProjectRepository
     {
         private readonly TechtrendsContext _context;
 
         // Constructor to inject the database context
-        public ProjectRepository(TechtrendsContext context)
+        public ProjectRepository(TechtrendsContext context) : base(context)
         {
             _context = context;
         }

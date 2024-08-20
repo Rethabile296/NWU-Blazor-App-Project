@@ -5,11 +5,11 @@ using TelemetryPortal.Models;
 
 namespace TelemetryPortal.Repository
 {
-    public class ClientRepository : IClientRepository
+    public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         private readonly TechtrendsContext _context;
 
-        public ClientRepository(TechtrendsContext context)
+        public ClientRepository(TechtrendsContext context) : base(context)
         {
             _context = context;
         }
